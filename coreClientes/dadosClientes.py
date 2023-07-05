@@ -47,15 +47,17 @@ def clientes_download(login_core,senha_core):
     # senha
     procurarSenha = navegador.find_element(By.XPATH, '//*[@id="teste"]')
     numerosBtn = procurarSenha.find_elements(By.TAG_NAME, 'button')
+    senha = [int(digito) for digito in senha_core]
     listaBtn = [button.get_attribute('textContent').replace(
         'ou', '') for button in numerosBtn]
+    # print(senha)
     print('Inserindo senha...')
-    while len(senha_core) != 0:
-        for n in senha_core:
+    while len(senha) != 0:
+        for n in senha:
             for i, botao in enumerate(listaBtn):
-                if str(senha_core[0]) in botao:
+                if str(senha[0]) in botao:
                     numerosBtn[i].click()
-                    senha_core.remove(senha_core[0])
+                    senha.remove(senha[0])
                     time.sleep(1)
                     break
     # click entrar

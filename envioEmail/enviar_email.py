@@ -1,5 +1,4 @@
 import smtplib
-import os
 import json
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -8,23 +7,26 @@ from email.mime.base import MIMEBase
 from email import encoders
 #import para ler xlsx
 import xlrd
+import pandas as pd
+import os
+from dotenv import load_dotenv
+load_dotenv()
 #lista de emails
 def enviar_email():
     email_para = []
-    #abrir excel
-    lista_emails = xlrd.open_workbook('C:/Users/Jeferson/Desktop/aws-puppeteer/envioEmail/teste.xlsx')#'/home/jeferson/aws-puppeteer/envioEmail/teste.xlsx'
-    #ler como lista
-    sheet = lista_emails.sheet_by_index(0)
-    #percorrer todas as linhas da coluna 0
+    # Abrir o arquivo Excel usando o pandas
+    df = pd.read_excel('C:/Users/Jeferson/Desktop/aws-puppeteer/envioEmail/teste.xlsx')
+    # Obter os valores da coluna 0
+    email_para = df.iloc[:, 0].tolist()
     for linha in range(0,1):
         email_para.append(sheet.cell_value(linha, 0))
     print(f"Emails encontrados :{email_para}")
     for email in email_para:
         #iniciar o servidor SMTP
-        host = 'mail.norwaybank.com.br'
-        port = '587'
-        login = 'suporte@norwaybank.com.br'
-        senha = 'Norway@2023'
+        host = os.getenv("HOST_MAIL__NB")
+        port = os.getenv("MAIL_PORT_NB")
+        login = os.getenv("LOGIN_SUP_NB")
+        senha = os.getenv("SENHA_EMAIL_NB")
         # host = 'smtp.sendgrid.net'
         # port = '587'
         # login = 'MKxovf5PR0uOznwuDGyyRg'
