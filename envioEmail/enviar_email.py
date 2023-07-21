@@ -27,10 +27,6 @@ def enviar_email():
         port = os.getenv("MAIL_PORT_NB")
         login = os.getenv("LOGIN_SUP_NB")
         senha = os.getenv("SENHA_EMAIL_NB")
-        # host = 'smtp.sendgrid.net'
-        # port = '587'
-        # login = 'MKxovf5PR0uOznwuDGyyRg'
-        # senha = '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'
         #entra no servidor
         server  = smtplib.SMTP(host,port)
         #iniciar o TLS
